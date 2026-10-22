@@ -115,3 +115,15 @@ Open the service URL for the storefront and append `/admin` for management. The 
 Render’s free PostgreSQL database expires after 30 days and free web services can sleep when idle. This setup is for a demo, not live customer orders. Export data before expiry or upgrade the database. Third-party product image URLs are still demonstration assets.
 
 If creating resources manually rather than through the Blueprint, create a free PostgreSQL database first, use the same region for the Docker service, and copy the env keys from `render.yaml`. Set `DB_URL` to the **internal** database URL. Generate `APP_KEY_BASE64` from `php -r 'echo base64_encode(random_bytes(32));'` and set a separate strong `ADMIN_PASSWORD`. Do not copy a database URL, password or application key into Git.
+
+
+### Current demo deployment
+
+- Storefront: https://ecom-laravel-w7vz.onrender.com
+- Admin: https://ecom-laravel-w7vz.onrender.com/admin
+- Service dashboard: https://dashboard.render.com/web/srv-dbcvmm6q1p3s73dfafm0
+- Database dashboard: https://dashboard.render.com/d/dpg-dbcvgtbncjis73dph10g-a
+- Workspace: My Workspace (sahnewajsojib@gmail.com); region: Singapore.
+- Free database expiry: 21 November 2026.
+
+These resources were created directly in Render and are not currently linked to a Blueprint. Environment settings in Render are the active configuration. The committed Blueprint matches the database’s immutable name/user/version for a future setup; do not create another stack for this existing deployment. The service uses the public repository URL; use Manual Deploy → Deploy latest commit for subsequent releases until Git-provider auto-deployment is configured and verified. The initial administrator email is `admin@example.com`; obtain the password from `ADMIN_PASSWORD` in the service’s Environment settings. No deployed credentials are stored in this repository.

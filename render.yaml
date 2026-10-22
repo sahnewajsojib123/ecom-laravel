@@ -18,7 +18,7 @@ services:
       - key: APP_KEY_BASE64
         generateValue: true
       - key: APP_URL
-        value: https://ecom-laravel.onrender.com
+        value: https://ecom-laravel-w7vz.onrender.com
       - key: DB_CONNECTION
         value: pgsql
       - key: DB_URL
@@ -50,6 +50,7 @@ databases:
   - name: ecom-laravel-db
     plan: free
     region: singapore
-    databaseName: ecom_laravel
-    user: ecom_laravel
+    databaseName: ecom_laravel_db
+    user: ecom_laravel_db_user
+    postgresMajorVersion: "17"
     ipAllowList: []
