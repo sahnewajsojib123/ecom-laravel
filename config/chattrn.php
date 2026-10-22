@@ -9,8 +9,8 @@ return [
     'backend_url' => env('CHATTRN_BACKEND_URL', 'https://api.chattrn.com'),
     'connection_token' => env('CHATTRN_TOKEN'),
     'store' => [
-        'name' => 'Nova Tech',
-        'domain' => 'http://127.0.0.1:8000',
+        'name' => env('APP_NAME', 'My Store'),
+        'domain' => env('APP_URL'),
         'currency' => 'BDT',
         'country_code' => 'BD',
         'delivery_mode' => 'zone',
