@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Banner;
 use App\Models\Category;
+use App\Models\Customer;
 use App\Models\Inventory;
 use App\Models\Order;
 use App\Models\Outlet;
@@ -39,7 +40,7 @@ class AdminController extends Controller
 
     public function data()
     {
-        return ['user' => Auth::user()->only('name', 'email'), 'products' => Product::with('category')->latest()->get(), 'variants' => ProductVariant::with('product')->orderBy('product_id')->orderBy('id')->get(), 'outlets' => Outlet::all(), 'categories' => Category::all(), 'inventories' => Inventory::with('product', 'outlet', 'variant')->get(), 'banners' => Banner::all(), 'settings' => Setting::pluck('value', 'key'), 'orders' => Order::with('items', 'outlet')->latest()->get()];
+        return ['user' => Auth::user()->only('name', 'email'), 'products' => Product::with('category')->latest()->get(), 'variants' => ProductVariant::with('product')->orderBy('product_id')->orderBy('id')->get(), 'outlets' => Outlet::all(), 'categories' => Category::all(), 'inventories' => Inventory::with('product', 'outlet', 'variant')->get(), 'banners' => Banner::all(), 'settings' => Setting::pluck('value', 'key'), 'customers' => Customer::withCount('orders')->withSum('orders', 'total')->latest()->get(), 'orders' => Order::with('items', 'outlet')->latest()->get()];
     }
 
     public function save(Request $r, string $type, ?int $id = null)

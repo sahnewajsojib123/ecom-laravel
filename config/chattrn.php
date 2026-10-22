@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Customer;
+
 // Rewritten by `php artisan chattrn:map`. See vendor/chattrn/connector/config/chattrn.php
 // for what each key means.
 return [
@@ -22,7 +24,7 @@ return [
         'product' => 'App\\Models\\Product',
         'variant' => 'App\\Models\\ProductVariant',
         'order' => 'App\\Models\\Order',
-        'customer' => null,
+        'customer' => Customer::class,
         'location' => 'App\\Models\\Outlet',
     ],
     'inventory' => [

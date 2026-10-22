@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Banner;
 use App\Models\Category;
+use App\Models\Customer;
 use App\Models\Inventory;
 use App\Models\Order;
 use App\Models\Outlet;
@@ -91,7 +92,8 @@ class StoreController extends Controller
                 $stock->decrement('quantity', $line['quantity']);
             }
             $fee = $d['fulfillment'] === 'pickup' ? 0 : (int) (Setting::where('key', 'delivery_fee')->value('value') ?? 120);
-            $order = Order::create(collect($d)->except('items')->all() + ['reference' => (string) Str::uuid(), 'subtotal' => $subtotal, 'delivery_fee' => $fee, 'total' => $subtotal + $fee]);
+            $customer = Customer::firstOrCreate(['phone' => Customer::normalizePhone($d['phone'])], ['name' => $d['customer_name'], 'email' => $d['email'] ?? null, 'address' => $d['address']]);
+            $order = Order::create(collect($d)->except('items')->all() + ['customer_id' => $customer->id, 'reference' => (string) Str::uuid(), 'subtotal' => $subtotal, 'delivery_fee' => $fee, 'total' => $subtotal + $fee]);
             $order->items()->createMany($items);
 
             return response()->json(['reference' => $order->reference, 'total' => $order->total], 201);
