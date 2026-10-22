@@ -7,7 +7,7 @@ services:
     branch: main
     dockerfilePath: ./Dockerfile
     healthCheckPath: /up
-    autoDeployTrigger: commit
+    autoDeployTrigger: off
     envVars:
       - key: APP_NAME
         value: Nova Tech

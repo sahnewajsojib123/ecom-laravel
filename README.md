@@ -93,7 +93,7 @@ These are same-origin browser APIs using Laravel sessions and CSRF protection, i
 php artisan test
 ```
 
-15 tests / 40 assertions pass, including the skeleton's 2 tests. Commerce tests cover outlet prices, visibility, admin access, server totals, stock limits, transaction rollback, duplicate lines, retry idempotency, pickup fees, inventory/settings editing and cancellation restoration. Browser checks covered storefront rendering, cart, checkout, successful local order, admin login, order visibility, and cancellation. Narrow-screen CSS is provided; a separate mobile viewport/device check was not performed.
+20 tests / 81 assertions pass, including the skeleton's 2 tests. Commerce tests cover outlet prices, visibility, admin access, server totals, stock limits, transaction rollback, duplicate lines, retry idempotency, pickup fees, inventory/settings editing, cancellation restoration, restart-safe demo initialization, and independent login rate limits. Browser checks covered storefront rendering, cart, checkout, successful local order, admin login, order visibility, and cancellation. Narrow-screen CSS is provided; a separate mobile viewport/device check was not performed.
 
 ## Hosting and remaining launch work
 
