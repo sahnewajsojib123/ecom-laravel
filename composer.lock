@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b95aef2242bb3dce2389c238b7ec69bf",
+    "content-hash": "58f7652b531ddbfcbadfc283e9e61f7b",
     "packages": [
         {
             "name": "brick/math",
@@ -139,6 +139,61 @@
                 }
             ],
             "time": "2026-09-06T14:11:38+00:00"
+        },
+        {
+            "name": "chattrn/connector",
+            "version": "v1.0.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sahnewajsojib123/chattrn-connector.git",
+                "reference": "e81a10227270ef5d67f3870f50078b597c657938"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sahnewajsojib123/chattrn-connector/zipball/e81a10227270ef5d67f3870f50078b597c657938",
+                "reference": "e81a10227270ef5d67f3870f50078b597c657938",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/console": "^10.0|^11.0|^12.0|^13.0",
+                "illuminate/database": "^10.0|^11.0|^12.0|^13.0",
+                "illuminate/http": "^10.0|^11.0|^12.0|^13.0",
+                "illuminate/support": "^10.0|^11.0|^12.0|^13.0",
+                "php": "^8.1"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^8.0|^9.0|^10.0",
+                "phpunit/phpunit": "^10.0|^11.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Chattrn\\Connector\\ChattrnServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Chattrn\\Connector\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Serves the Chattrn API (devspec.txt: \"Slice 3: Laravel package installer\") from your own Laravel store, so Chattrn can read products, stock and orders the same way it reads a native Chattrn API or Shopify store.",
+            "keywords": [
+                "api",
+                "chattrn",
+                "ecommerce",
+                "laravel"
+            ],
+            "support": {
+                "issues": "https://github.com/sahnewajsojib123/chattrn-connector/issues",
+                "source": "https://github.com/sahnewajsojib123/chattrn-connector/tree/v1.0.5"
+            },
+            "time": "2026-10-22T21:18:01+00:00"
         },
         {
             "name": "dflydev/dot-access-data",
