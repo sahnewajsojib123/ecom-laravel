@@ -102,3 +102,16 @@ This is a functioning starter, not full feature parity with the reference or a p
 For deployment: use `composer install --no-dev --optimize-autoloader`, set a unique `APP_KEY`, production database credentials, `APP_ENV=production`, `APP_DEBUG=false`, an HTTPS `APP_URL`, secure session cookies, and your admin credentials. Point the web root at `public/`, make `storage/` and `bootstrap/cache/` writable, run migrations, and run `php artisan optimize`. Use a persistent database and backups. Never publish `.env`, the local SQLite database, logs, or `LOCAL_ACCESS.md`.
 
 Not included: online payment integration (bKash/Nagad/SSLCommerz), courier API, transactional SMS/email, customer accounts, variants/IMEI tracking, coupons, returns/refunds, granular staff roles/outlet-scoped admin permissions, image-file upload/storage, inventory movement/audit logs, full CMS/legal-policy editing, or automated abandoned-order expiry. Images are managed by URL. Admin catalog/orders currently load together; add pagination and a dedicated audit trail for larger operations. Tax handling and actual shipping zones/rates need your business rules.
+
+
+## Render free demo
+
+The repository includes a Dockerfile and `render.yaml` Blueprint for one free web service and one free PostgreSQL database in Singapore. The Docker image serves `public/` with Apache and PHP 8.4. No Node build is needed.
+
+Use Render’s New → Blueprint flow with this GitHub repository and `main`. Review that **both resources use the Free plan**, then deploy. The Blueprint generates independent application-key and admin-password secrets. The app sets its URL from Render’s actual external URL, enables HTTPS cookies, stores sessions/cache in PostgreSQL, runs migrations, and initializes the demo only if the store has no existing records.
+
+Open the service URL for the storefront and append `/admin` for management. The initial email is `admin@example.com`; retrieve `ADMIN_PASSWORD` from the service’s Environment settings. This differs from the local demo password. Do not rotate `APP_KEY_BASE64` on routine redeploys: it protects encrypted sessions. Changing `ADMIN_PASSWORD` after initialization does not reset the stored administrator password.
+
+Render’s free PostgreSQL database expires after 30 days and free web services can sleep when idle. This setup is for a demo, not live customer orders. Export data before expiry or upgrade the database. Third-party product image URLs are still demonstration assets.
+
+If creating resources manually rather than through the Blueprint, create a free PostgreSQL database first, use the same region for the Docker service, and copy the env keys from `render.yaml`. Set `DB_URL` to the **internal** database URL. Generate `APP_KEY_BASE64` from `php -r 'echo base64_encode(random_bytes(32));'` and set a separate strong `ADMIN_PASSWORD`. Do not copy a database URL, password or application key into Git.
