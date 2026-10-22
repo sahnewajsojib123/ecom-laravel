@@ -142,7 +142,7 @@
         },
         {
             "name": "chattrn/connector",
-            "version": "v1.0.5",
+            "version": "v1.0.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sahnewajsojib123/chattrn-connector.git",
@@ -191,7 +191,7 @@
             ],
             "support": {
                 "issues": "https://github.com/sahnewajsojib123/chattrn-connector/issues",
-                "source": "https://github.com/sahnewajsojib123/chattrn-connector/tree/v1.0.5"
+                "source": "https://github.com/sahnewajsojib123/chattrn-connector/tree/v1.0.6"
             },
             "time": "2026-10-22T21:18:01+00:00"
         },
