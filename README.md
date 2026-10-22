@@ -93,7 +93,7 @@ These are same-origin browser APIs using Laravel sessions and CSRF protection, i
 php artisan test
 ```
 
-20 tests / 81 assertions pass, including the skeleton's 2 tests. Commerce tests cover outlet prices, visibility, admin access, server totals, stock limits, transaction rollback, duplicate lines, retry idempotency, pickup fees, inventory/settings editing, cancellation restoration, restart-safe demo initialization, and independent login rate limits. Browser checks covered storefront rendering, cart, checkout, successful local order, admin login, order visibility, and cancellation. Narrow-screen CSS is provided; a separate mobile viewport/device check was not performed.
+31 tests / 134 assertions pass, including the skeleton's 2 tests. Commerce tests cover outlet prices, visibility, admin access, server totals, stock limits, transaction rollback, duplicate lines, retry idempotency, pickup fees, inventory/settings editing, cancellation restoration, restart-safe demo initialization, and independent login rate limits. Browser checks covered storefront rendering, cart, checkout, successful local order, admin login, order visibility, and cancellation. Narrow-screen CSS is provided; a separate mobile viewport/device check was not performed.
 
 ## Hosting and remaining launch work
 
@@ -127,3 +127,16 @@ If creating resources manually rather than through the Blueprint, create a free 
 - Free database expiry: 21 November 2026.
 
 These resources were created directly in Render and are not currently linked to a Blueprint. Environment settings in Render are the active configuration. The committed Blueprint matches the database’s immutable name/user/version for a future setup; do not create another stack for this existing deployment. The service uses the public repository URL; use Manual Deploy → Deploy latest commit for subsequent releases until Git-provider auto-deployment is configured and verified. The initial administrator email is `admin@example.com`; obtain the password from `ADMIN_PASSWORD` in the service’s Environment settings. No deployed credentials are stored in this repository.
+
+
+## Product variants
+
+Products now have `product_variants` with their own unique SKU, display name, active flag and optional color/storage/size attributes. Existing products and historical orders are migrated to a Default variant. Existing prices and quantities are preserved.
+
+In admin, open **Product variants**. Rename the Default variant to your first real option, then add additional variants. In **Outlet inventory**, select the product, variant and outlet, and enter that option’s price and available stock. Each variant/outlet pair has one stock record. Hide an unavailable option by disabling its storefront visibility; existing order history is retained. New products automatically receive one Default variant.
+
+The storefront shows one card per product, a starting price and total available stock across active options. Product details let shoppers explicitly select an option and see its price, SKU, stock and outlet availability. Cart lines are separated by variant. Orders record `variant_id`, `variant_name` and `sku` alongside the existing product/name/quantity/unit_price snapshot. Cancellation returns stock to that exact variant and outlet.
+
+The order API accepts `items[].variant_id`. It may be omitted only for a product with exactly one active variant, preserving older simple-product clients. Inventory writes accept `variant_id`, and it must belong to `product_id`. The admin APIs use `/api/v1/admin/variants` for creation and `/api/v1/admin/variants/{id}` for updates. `OrderItem::variant()` returns its `ProductVariant`; `OrderItem::product()` continues returning the parent product. Variant SKU snapshots are available as `$orderItem->sku`.
+
+The migration includes a rollback guard: consolidate multiple variant inventory rows for the same product/outlet before attempting to roll back to the original product-only schema. Do not roll back the code to a version that lacks variant handling after real variants are in use.
