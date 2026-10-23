@@ -31,6 +31,9 @@ fi
 if [ "${DEMO_SEED:-false}" = 'true' ]; then
     php artisan commerce:initialize-demo --no-interaction
 fi
+if [ -n "${ADMIN_EMAIL:-}" ] && [ -n "${ADMIN_PASSWORD:-}" ]; then
+    php artisan commerce:sync-admin --no-interaction
+fi
 php artisan config:cache --no-interaction
 php artisan route:cache --no-interaction
 php artisan view:cache --no-interaction
