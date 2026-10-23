@@ -18,6 +18,7 @@ class CustomerAccountTest extends CommerceOperationsTestCase
         config(['commerce.email_enabled' => false]);
         $this->postJson('/api/v1/account/code', ['email' => 'buyer@example.com'])->assertStatus(503);
         $this->assertDatabaseCount('login_codes', 0);
+        $this->get('/account')->assertOk()->assertSee('data-sign-in-enabled="0"', false);
     }
 
     public function test_one_time_email_verification_links_only_orders_for_verified_email(): void

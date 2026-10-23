@@ -195,4 +195,14 @@ class OrderOperationsTest extends CommerceOperationsTestCase
         $this->withHeader('X-Chattrn-Access-Token', 'test-token')->putJson($url, $payload)->assertOk()->assertJsonPath('revision', 2);
         $this->assertSame('Updated through Chattrn', $order->fresh()->address);
     }
+
+    public function test_zero_quantity_new_variants_are_not_inserted_during_edit(): void
+    {
+        $shop = $this->shop();
+        $order = $this->placed($shop);
+        $this->admin();
+        $variant = $shop[1]->variants()->create(['name' => 'Blue', 'sku' => 'BLUE-ZERO', 'active' => true]);
+        $this->operation($order, 'edit', ['reason' => 'No quantity requested', 'items' => [['variant_id' => $shop[2]->id, 'quantity' => 2], ['variant_id' => $variant->id, 'quantity' => '0']]])->assertOk();
+        $this->assertSame(1, $order->items()->count());
+    }
 }

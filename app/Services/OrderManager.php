@@ -109,7 +109,7 @@ class OrderManager
                 }
             }
             foreach ($desired as $variantId => $line) {
-                if ($existing->has($variantId) || $line['quantity'] === 0) {
+                if ($existing->has($variantId) || (int) $line['quantity'] === 0) {
                     continue;
                 }
                 $stock = $this->adjustStock($order, (int) $variantId, (int) $line['quantity']);
