@@ -21,6 +21,13 @@ sed -i "s/<VirtualHost \*:80>/<VirtualHost *:$PORT>/" /etc/apache2/sites-availab
 
 php artisan config:clear --no-interaction
 php artisan migrate --force --no-interaction
+# Pair after storage is available. Registration is idempotent and stores credentials encrypted.
+# An expired setup token should not take the storefront offline.
+if [ -n "${CHATTRN_TOKEN:-}" ]; then
+    if ! php artisan chattrn:register --no-interaction; then
+        echo 'Chattrn pairing did not complete. Check the setup token and public backend URL.' >&2
+    fi
+fi
 if [ "${DEMO_SEED:-false}" = 'true' ]; then
     php artisan commerce:initialize-demo --no-interaction
 fi
