@@ -205,4 +205,14 @@ class OrderOperationsTest extends CommerceOperationsTestCase
         $this->operation($order, 'edit', ['reason' => 'No quantity requested', 'items' => [['variant_id' => $shop[2]->id, 'quantity' => 2], ['variant_id' => $variant->id, 'quantity' => '0']]])->assertOk();
         $this->assertSame(1, $order->items()->count());
     }
+
+    public function test_chattrn_reads_actual_payment_status_shipping_and_variant_ids(): void
+    {
+        $shop = $this->shop();
+        $order = $this->placed($shop);
+        $this->admin();
+        $this->operation($order, 'payment', ['amount' => 2120, 'method' => 'cash', 'reference' => 'CHATTRN-PAY', 'note' => 'Verified', 'confirmed' => true])->assertOk();
+        config(['chattrn.access_token' => 'test-token']);
+        $this->withHeader('X-Chattrn-Access-Token', 'test-token')->getJson('/chattrn/api/2026-10/orders/'.$order->id.'.json')->assertOk()->assertJsonPath('order.financial_status', 'paid')->assertJsonPath('order.fulfillment_status', null)->assertJsonPath('order.subtotal_price', '2000.00')->assertJsonPath('order.shipping_lines.0.price', '120.00')->assertJsonPath('order.line_items.0.variant_id', $shop[2]->id);
+    }
 }

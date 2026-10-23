@@ -15,6 +15,52 @@ use Illuminate\Support\Str;
 
 class ChattrnCommerceController extends ChattrnApiController
 {
+    public function order(Request $request, string $id): JsonResponse
+    {
+        return response()->json(['order' => $this->serializeOrder(Order::findOrFail($id))])->header('X-Chattrn-API-Version', config('chattrn.api_version'));
+    }
+
+    public function orders(Request $request): JsonResponse
+    {
+        $query = Order::query()->latest('id');
+        if ($request->filled('name')) {
+            $query->where('reference', ltrim($request->string('name')->toString(), '#'));
+        }
+        $orders = $query->limit(min(250, max(1, (int) $request->query('limit', 50))))->get();
+
+        return response()->json(['orders' => $orders->map(fn ($order) => $this->serializeOrder($order))])->header('X-Chattrn-API-Version', config('chattrn.api_version'));
+    }
+
+    public function customerOrders(Request $request, string $id): JsonResponse
+    {
+        return response()->json(['orders' => Order::where('customer_id', $id)->latest('id')->limit(250)->get()->map(fn ($order) => $this->serializeOrder($order))])->header('X-Chattrn-API-Version', config('chattrn.api_version'));
+    }
+
+    private function serializeOrder(Order $order): array
+    {
+        $result = ModelMap::toOrder($order);
+        $money = fn (int $value): string => number_format($value, 2, '.', '');
+        $result['subtotal_price'] = $money($order->subtotal);
+        $result['total_discounts'] = $money($order->discount_total);
+        $result['total_tax'] = $money($order->tax_total);
+        $result['financial_status'] = $order->payment_status === 'unpaid' ? 'pending' : $order->payment_status;
+        $result['fulfillment_status'] = match ($order->fulfillment_status) {
+            'unfulfilled' => null, 'partially_fulfilled' => 'partial', default => $order->fulfillment_status
+        };
+        $result['customer']['id'] = $order->customer_id;
+        $result['shipping_address'] += ['city' => $order->district, 'zip' => $order->postal_code, 'country_code' => $order->country_code];
+        $result['shipping_lines'] = [['title' => $order->fulfillment, 'price' => $money($order->delivery_fee)]];
+        $result['fulfillments'] = $order->shipments()->get()->toArray();
+        $items = $order->items()->get()->keyBy('id');
+        $result['line_items'] = collect($result['line_items'])->map(function ($line) use ($order, $items) {
+            $item = $items->get($line['id']);
+
+            return $line + ['product_id' => $item->product_id, 'variant_id' => $item->variant_id, 'fulfillable_quantity' => $order->status === 'cancelled' ? 0 : $item->quantity - $item->fulfilled_quantity, 'returned_quantity' => $item->returned_quantity];
+        })->all();
+
+        return $result;
+    }
+
     public function operate(Request $request, string $id, string $action): JsonResponse
     {
         $order = Order::findOrFail($id);
@@ -26,7 +72,7 @@ class ChattrnCommerceController extends ChattrnApiController
         $data = $request->validate($rules);
         $order = app(OrderManager::class)->apply($order, $action, $data, 'chattrn');
 
-        return response()->json(['order' => ModelMap::toOrder($order), 'revision' => $order->revision])->header('X-Chattrn-API-Version', config('chattrn.api_version'));
+        return response()->json(['order' => $this->serializeOrder($order), 'revision' => $order->revision])->header('X-Chattrn-API-Version', config('chattrn.api_version'));
     }
 
     public function updateOrder(Request $request, string $id): JsonResponse
@@ -51,7 +97,7 @@ class ChattrnCommerceController extends ChattrnApiController
         $data['operation_key'] = $data['operation_key'] ?? (string) Str::uuid();
         $order = app(OrderManager::class)->apply($order, 'cancel', $data, 'chattrn');
 
-        return response()->json(['order' => ModelMap::toOrder($order)])->header('X-Chattrn-API-Version', config('chattrn.api_version'));
+        return response()->json(['order' => $this->serializeOrder($order)])->header('X-Chattrn-API-Version', config('chattrn.api_version'));
     }
 
     public function orderFulfillments(Request $request, string $id): JsonResponse
