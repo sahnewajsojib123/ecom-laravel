@@ -146,12 +146,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sahnewajsojib123/chattrn-connector.git",
-                "reference": "7454de05833a6d6d167a3867f50aee3dfcaf64be"
+                "reference": "6a130cb09c073b28f66ee1d406f91ac1e15627a6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sahnewajsojib123/chattrn-connector/zipball/7454de05833a6d6d167a3867f50aee3dfcaf64be",
-                "reference": "7454de05833a6d6d167a3867f50aee3dfcaf64be",
+                "url": "https://api.github.com/repos/sahnewajsojib123/chattrn-connector/zipball/6a130cb09c073b28f66ee1d406f91ac1e15627a6",
+                "reference": "6a130cb09c073b28f66ee1d406f91ac1e15627a6",
                 "shasum": ""
             },
             "require": {
@@ -194,7 +194,7 @@
                 "issues": "https://github.com/sahnewajsojib123/chattrn-connector/issues",
                 "source": "https://github.com/sahnewajsojib123/chattrn-connector/tree/main"
             },
-            "time": "2026-10-23T07:14:39+00:00"
+            "time": "2026-10-23T08:49:41+00:00"
         },
         {
             "name": "dflydev/dot-access-data",
