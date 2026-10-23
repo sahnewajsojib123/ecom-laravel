@@ -11,6 +11,7 @@ use App\Models\Outlet;
 use App\Models\Product;
 use App\Models\ProductVariant;
 use App\Models\Setting;
+use App\Services\OrderManager;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -49,7 +50,7 @@ class AdminController extends Controller
         abort_unless(isset($models[$type]), 404);
         $rules = match ($type) {
             'products' => ['name' => 'required|string|max:200', 'sku' => ['required', 'string', 'max:80', Rule::unique('products')->ignore($id)], 'brand' => 'required|string|max:80', 'category_id' => 'required|exists:categories,id', 'description' => 'required|string|max:10000', 'image' => 'required|url:http,https|max:2000', 'featured' => 'required|boolean', 'active' => 'required|boolean'],
-            'outlets' => ['name' => 'required|string|max:100', 'address' => 'required|string|max:255', 'phone' => 'required|string|max:40', 'active' => 'required|boolean'],
+            'outlets' => ['country_code' => 'sometimes|required|string|size:2', 'district' => 'nullable|string|max:100', 'name' => 'required|string|max:100', 'address' => 'required|string|max:255', 'phone' => 'required|string|max:40', 'active' => 'required|boolean'],
             'categories' => ['name' => ['required', 'string', 'max:100', Rule::unique('categories')->ignore($id)], 'icon' => 'required|in:smartphone,laptop,tablet,headphones,watch,plug,monitor,gamepad'],
             'variants' => ['product_id' => 'required|integer|exists:products,id', 'name' => 'required|string|max:120', 'sku' => ['required', 'string', 'max:80', Rule::unique('product_variants')->ignore($id)], 'options' => 'nullable|array:color,storage,size', 'options.*' => 'nullable|string|max:80', 'active' => 'required|boolean'],
             'inventories' => ['product_id' => 'required|integer|exists:products,id', 'variant_id' => ['nullable', 'integer', Rule::exists('product_variants', 'id')->where('product_id', $r->input('product_id'))], 'outlet_id' => 'required|exists:outlets,id', 'price' => 'required|integer|min:1|max:100000000', 'compare_price' => 'nullable|integer|gte:price|max:100000000', 'quantity' => 'required|integer|min:0|max:1000000'],
@@ -101,19 +102,6 @@ class AdminController extends Controller
     {
         $d = $r->validate(['status' => 'required|in:confirmed,processing,completed,cancelled']);
 
-        return DB::transaction(function () use ($order, $d) {
-            Outlet::whereKey($order->outlet_id)->lockForUpdate()->firstOrFail();
-            $o = Order::whereKey($order->id)->lockForUpdate()->firstOrFail();
-            $allowed = ['pending' => ['confirmed', 'cancelled'], 'confirmed' => ['processing', 'cancelled'], 'processing' => ['completed', 'cancelled'], 'completed' => [], 'cancelled' => []];
-            abort_unless(in_array($d['status'], $allowed[$o->status] ?? []), 422, 'This order status transition is not allowed.');
-            if ($d['status'] === 'cancelled') {
-                foreach ($o->items()->orderBy('product_id')->get() as $i) {
-                    Inventory::where('outlet_id', $o->outlet_id)->where('product_id', $i->product_id)->where('variant_id', $i->variant_id)->increment('quantity', $i->quantity);
-                }
-            }
-            $o->update($d);
-
-            return $o;
-        }, 3);
+        return app(OrderManager::class)->apply($order, 'status', $d, 'admin:'.$r->user()->id);
     }
 }

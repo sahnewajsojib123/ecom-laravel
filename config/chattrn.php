@@ -1,6 +1,11 @@
 <?php
 
 use App\Models\Customer;
+use App\Models\Inventory;
+use App\Models\Order;
+use App\Models\Outlet;
+use App\Models\Product;
+use App\Models\ProductVariant;
 
 // Rewritten by `php artisan chattrn:map`. See vendor/chattrn/connector/config/chattrn.php
 // for what each key means.
@@ -21,14 +26,14 @@ return [
         'primary_location_id' => '1',
     ],
     'models' => [
-        'product' => 'App\\Models\\Product',
-        'variant' => 'App\\Models\\ProductVariant',
-        'order' => 'App\\Models\\Order',
+        'product' => Product::class,
+        'variant' => ProductVariant::class,
+        'order' => Order::class,
         'customer' => Customer::class,
-        'location' => 'App\\Models\\Outlet',
+        'location' => Outlet::class,
     ],
     'inventory' => [
-        'model' => 'App\\Models\\Inventory',
+        'model' => Inventory::class,
         'columns' => [
             'product_id' => 'product_id',
             'variant_id' => 'variant_id',
@@ -40,11 +45,11 @@ return [
     ],
     'columns' => [
         'product' => [
-            'title' => 'title',
-            'handle' => 'slug',
-            'vendor' => null,
+            'title' => 'name',
+            'handle' => 'id',
+            'vendor' => 'brand',
             'status' => null,
-            'image_url' => 'image_url',
+            'image_url' => 'image',
         ],
         'variant' => [
             'title' => 'name',
@@ -55,7 +60,7 @@ return [
             'options_json' => 'options',
         ],
         'order' => [
-            'number' => 'number',
+            'number' => 'reference',
             'phone' => 'phone',
             'total' => 'total',
             'currency' => null,

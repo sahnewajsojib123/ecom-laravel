@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Http\Controllers\ChattrnCommerceController;
+use Chattrn\Connector\Http\Controllers\ChattrnApiController;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
@@ -15,7 +17,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->bind(ChattrnApiController::class, ChattrnCommerceController::class);
     }
 
     /**
@@ -24,6 +26,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         RateLimiter::for('store-api', fn (Request $request) => Limit::perMinute(120)->by('store-api:'.$request->ip()));
+        RateLimiter::for('customer-auth', fn (Request $request) => Limit::perMinute(5)->by('customer-auth:'.$request->ip()));
         RateLimiter::for('checkout', fn (Request $request) => Limit::perMinute(10)->by('checkout:'.$request->ip()));
         RateLimiter::for('admin-login', fn (Request $request) => Limit::perMinute(5)->by('admin-login:'.$request->ip()));
 
