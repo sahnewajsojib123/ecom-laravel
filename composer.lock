@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "44118f0c288565c23a5dee7a21eb77d5",
+    "content-hash": "729d12534a174c8b1b1bde50dfa722ad",
     "packages": [
         {
             "name": "brick/math",
@@ -146,12 +146,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sahnewajsojib123/chattrn-connector.git",
-                "reference": "56002e1eb25a63365dc69227ed34d736b8999489"
+                "reference": "7454de05833a6d6d167a3867f50aee3dfcaf64be"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sahnewajsojib123/chattrn-connector/zipball/56002e1eb25a63365dc69227ed34d736b8999489",
-                "reference": "56002e1eb25a63365dc69227ed34d736b8999489",
+                "url": "https://api.github.com/repos/sahnewajsojib123/chattrn-connector/zipball/7454de05833a6d6d167a3867f50aee3dfcaf64be",
+                "reference": "7454de05833a6d6d167a3867f50aee3dfcaf64be",
                 "shasum": ""
             },
             "require": {
@@ -194,7 +194,7 @@
                 "issues": "https://github.com/sahnewajsojib123/chattrn-connector/issues",
                 "source": "https://github.com/sahnewajsojib123/chattrn-connector/tree/main"
             },
-            "time": "2026-10-23T01:08:15+00:00"
+            "time": "2026-10-23T07:14:39+00:00"
         },
         {
             "name": "dflydev/dot-access-data",

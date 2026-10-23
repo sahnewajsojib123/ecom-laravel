@@ -7,7 +7,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.3",
-        "chattrn/connector": "dev-main#56002e1eb25a63365dc69227ed34d736b8999489",
+        "chattrn/connector": "dev-main",
         "laravel/framework": "^13.17",
         "laravel/tinker": "^3.0"
     },
