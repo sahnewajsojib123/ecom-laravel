@@ -142,16 +142,16 @@
         },
         {
             "name": "chattrn/connector",
-            "version": "v1.1.1",
+            "version": "v1.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sahnewajsojib123/chattrn-connector.git",
-                "reference": "7bc6ec231ecd499553192527a38602dcbb1c7ef4"
+                "reference": "78dfff3c94ef9fd59812313e6872461056c8a189"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sahnewajsojib123/chattrn-connector/zipball/7bc6ec231ecd499553192527a38602dcbb1c7ef4",
-                "reference": "7bc6ec231ecd499553192527a38602dcbb1c7ef4",
+                "url": "https://api.github.com/repos/sahnewajsojib123/chattrn-connector/zipball/78dfff3c94ef9fd59812313e6872461056c8a189",
+                "reference": "78dfff3c94ef9fd59812313e6872461056c8a189",
                 "shasum": ""
             },
             "require": {
@@ -191,9 +191,9 @@
             ],
             "support": {
                 "issues": "https://github.com/sahnewajsojib123/chattrn-connector/issues",
-                "source": "https://github.com/sahnewajsojib123/chattrn-connector/tree/v1.1.1"
+                "source": "https://github.com/sahnewajsojib123/chattrn-connector/tree/v1.1.2"
             },
-            "time": "2026-10-22T23:11:59+00:00"
+            "time": "2026-10-23T00:26:41+00:00"
         },
         {
             "name": "dflydev/dot-access-data",
