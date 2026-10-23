@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "729d12534a174c8b1b1bde50dfa722ad",
+    "content-hash": "320bdfc1826d346005f91fe025b8598d",
     "packages": [
         {
             "name": "brick/math",
@@ -142,16 +142,16 @@
         },
         {
             "name": "chattrn/connector",
-            "version": "dev-main",
+            "version": "v1.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sahnewajsojib123/chattrn-connector.git",
-                "reference": "e899af5d4b0e5fa37c091ddf9c371dc377185603"
+                "reference": "5546d3f04209ba1f0fcec383eebc4c4afcc0ead7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sahnewajsojib123/chattrn-connector/zipball/e899af5d4b0e5fa37c091ddf9c371dc377185603",
-                "reference": "e899af5d4b0e5fa37c091ddf9c371dc377185603",
+                "url": "https://api.github.com/repos/sahnewajsojib123/chattrn-connector/zipball/5546d3f04209ba1f0fcec383eebc4c4afcc0ead7",
+                "reference": "5546d3f04209ba1f0fcec383eebc4c4afcc0ead7",
                 "shasum": ""
             },
             "require": {
@@ -162,10 +162,9 @@
                 "php": "^8.1"
             },
             "require-dev": {
-                "orchestra/testbench": "^8.0|^9.0|^10.0",
+                "orchestra/testbench": "^8.0|^9.0|^10.0|^11.0",
                 "phpunit/phpunit": "^10.0|^11.0"
             },
-            "default-branch": true,
             "type": "library",
             "extra": {
                 "laravel": {
@@ -192,9 +191,9 @@
             ],
             "support": {
                 "issues": "https://github.com/sahnewajsojib123/chattrn-connector/issues",
-                "source": "https://github.com/sahnewajsojib123/chattrn-connector/tree/main"
+                "source": "https://github.com/sahnewajsojib123/chattrn-connector/tree/v1.3.0"
             },
-            "time": "2026-10-23T16:54:25+00:00"
+            "time": "2026-10-23T17:54:03+00:00"
         },
         {
             "name": "dflydev/dot-access-data",
@@ -8869,9 +8868,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "chattrn/connector": 20
-    },
+    "stability-flags": {},
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
