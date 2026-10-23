@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9c2d40de98abbc8ee8f893911afa9b6d",
+    "content-hash": "44118f0c288565c23a5dee7a21eb77d5",
     "packages": [
         {
             "name": "brick/math",
@@ -142,16 +142,16 @@
         },
         {
             "name": "chattrn/connector",
-            "version": "v1.1.2",
+            "version": "dev-main",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sahnewajsojib123/chattrn-connector.git",
-                "reference": "78dfff3c94ef9fd59812313e6872461056c8a189"
+                "reference": "56002e1eb25a63365dc69227ed34d736b8999489"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sahnewajsojib123/chattrn-connector/zipball/78dfff3c94ef9fd59812313e6872461056c8a189",
-                "reference": "78dfff3c94ef9fd59812313e6872461056c8a189",
+                "url": "https://api.github.com/repos/sahnewajsojib123/chattrn-connector/zipball/56002e1eb25a63365dc69227ed34d736b8999489",
+                "reference": "56002e1eb25a63365dc69227ed34d736b8999489",
                 "shasum": ""
             },
             "require": {
@@ -165,6 +165,7 @@
                 "orchestra/testbench": "^8.0|^9.0|^10.0",
                 "phpunit/phpunit": "^10.0|^11.0"
             },
+            "default-branch": true,
             "type": "library",
             "extra": {
                 "laravel": {
@@ -191,9 +192,9 @@
             ],
             "support": {
                 "issues": "https://github.com/sahnewajsojib123/chattrn-connector/issues",
-                "source": "https://github.com/sahnewajsojib123/chattrn-connector/tree/v1.1.2"
+                "source": "https://github.com/sahnewajsojib123/chattrn-connector/tree/main"
             },
-            "time": "2026-10-23T00:26:41+00:00"
+            "time": "2026-10-23T01:08:15+00:00"
         },
         {
             "name": "dflydev/dot-access-data",
@@ -8868,7 +8869,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {},
+    "stability-flags": {
+        "chattrn/connector": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
